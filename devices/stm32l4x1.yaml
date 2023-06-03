@@ -15,11 +15,21 @@ RCC:
       SPI1EN:
         name: SPI2EN
         description: SPI peripheral 2 clock enable
+    _add:
+      TIM4EN:
+        description: TIM4 Timer clock enable
+        bitOffset: 2
+        bitWidth: 1
   APB1RSTR1:
     _modify:
       USART1RST:
         name: USART3RST
         description: USART3 reset
+    _add:
+      TIM4RST:
+        description: TIM4 timer reset
+        bitOffset: 2
+        bitWidth: 1
   AHB1RSTR:
     _modify:
       CRCRST:
@@ -41,6 +51,10 @@ RCC:
         bitOffset: 19
         bitWidth: 1
         access: read-write
+      TIM4SMEN:
+        description: TIM4 timer clocks enable during Sleep and Stop modes
+        bitOffset: 2
+        bitWidth: 1
 
 _modify:
   # The SVD calls ADC1 ADC.
@@ -57,6 +71,8 @@ _add:
   ADC2:
     derivedFrom: ADC1
     baseAddress: "0x50040100"
+  TIM4:
+    baseAddress: 0x40000800
 
 # Merge the thousands of individal bit fields into a single field for each
 # CAN filter register. This is not only much easier to use but also saves
@@ -74,6 +90,9 @@ _add:
 _copy:
   TIM3:
     from: TIM2
+
+_derive:
+  TIM4: TIM3
 
 MPU:
   _strip:
